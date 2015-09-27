@@ -6,7 +6,8 @@ ADD chinese-sources.list /etc/apt/sources.list
 RUN mkdir /mysqldata
 
 # Install MySQL 5.6
-RUN apt-get update && apt-get install -y --force-yes \
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update && apt-get install -y --force-yes \
     mysql-server-5.6 && \
     service mysql stop && \
     sed -e 's/^datadir\t.*$/datadir = \/mysqldata/' -i /etc/mysql/my.cnf && \
