@@ -15,7 +15,7 @@ ENV PHPCMS_VERSION 9.5.10
 RUN wget -O phpcms.zip http://download.phpcms.cn/v9/9.5/phpcms_v9.5.10_UTF8.zip
 RUN unzip -d phpcms/ ./phpcms.zip
 RUN rm -fr /usr/share/nginx/html/*
-RUN mv phpcms/install_package/* /usr/share/nginx/html
+RUN cp-rf phpcms/install_package/. /usr/share/nginx/html
 RUN chmod -R 777 /usr/share/nginx/html/index.html /usr/share/nginx/html/caches /usr/share/nginx/html/html /usr/share/nginx/html/uploadfile /usr/share/nginx/html/phpsso_server/caches /usr/share/nginx/html/phpsso_server/uploadfile
 RUN rm -fr ./phpcms*
 
