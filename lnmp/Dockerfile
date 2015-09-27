@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server-5
 # Add scripts
 ADD firstrun.sh firstrun.sh
 RUN chmod +x *.sh
-RUN firstrun.sh
+RUN sh firstrun.sh
 
 # Expose our data directory
 VOLUME ["/mysqldata", "/var/log/mysql", "/etc/mysql"]
