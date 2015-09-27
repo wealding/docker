@@ -4,7 +4,7 @@ PASS=${MYSQL_PASSWORD:-$(pwgen -s -1 16)}
 DB=${MYSQL_DBNAME:-}
 
 # Start MySQL service
-/usr/bin/mysqld_safe --defaults-file &
+/usr/bin/mysqld_safe &
 while ! nc -vz localhost 3306; do sleep 1; done
 
 # Create user

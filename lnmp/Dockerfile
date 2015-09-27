@@ -17,9 +17,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server-5
     cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN mysql_install_db
-RUN service mysql stop
-
 # Add scripts
 ADD firstrun.sh firstrun.sh
 RUN chmod +x *.sh
