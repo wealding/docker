@@ -7,6 +7,8 @@ RUN mkdir /mysqldata
 
 RUN apt-get update
 
+RUN apt-get -y install netcat-traditional
+
 # Install MySQL 5.6
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server-5.6 && \
     service mysql stop && \
