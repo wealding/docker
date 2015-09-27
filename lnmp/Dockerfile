@@ -4,6 +4,8 @@ MAINTAINER bagheera "ding@gong.si"
 # 添加用户组
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
+ADD ../chinese-sources.list /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y perl --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
