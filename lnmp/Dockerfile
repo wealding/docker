@@ -5,10 +5,10 @@ ADD chinese-sources.list /etc/apt/sources.list
 
 RUN mkdir /mysqldata
 
+RUN apt-get update
+
 # Install MySQL 5.6
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update && apt-get install -y --force-yes \
-    mysql-server-5.6 && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server-5.6 && \
     service mysql stop && \
     sed -e 's/^datadir\t.*$/datadir = \/mysqldata/' -i /etc/mysql/my.cnf && \
     sed -e 's/^bind-address\t.*$/bind-address = 0.0.0.0/' -i /etc/mysql/my.cnf && \
