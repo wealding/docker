@@ -5,7 +5,7 @@ MAINTAINER bagheera "ding@gong.si"
 RUN mv /etc/localtime /etc/localtime.bak
 RUN ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-ADD ../chinese-sources.list /etc/apt/sources.list
+ADD chinese-sources.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y unzip && rm -rf /var/lib/apt/lists/*
 
