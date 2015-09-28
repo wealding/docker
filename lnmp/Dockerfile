@@ -10,7 +10,7 @@ ADD mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
 RUN apt-get update
 RUN apt-get -y install pwgen
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q mysql-server-5.6 && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q mysql-server && \
     rm -rf /var/lib/apt/lists/* && \
     if [ ! -f /usr/share/mysql/my-default.cnf ] ; then cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf; fi && \
     mysql_install_db > /dev/null 2>&1 && \
