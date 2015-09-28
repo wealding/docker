@@ -1,7 +1,7 @@
 FROM index.tenxcloud.com/bagheera/nginx_php5
 MAINTAINER bagheera "ding@gong.si"
 
-# ADD chinese-sources.list /etc/apt/sources.list
+ADD chinese-sources.list /etc/apt/sources.list
 
 # Add MySQL configuration
 ADD my.cnf /etc/mysql/conf.d/my.cnf
