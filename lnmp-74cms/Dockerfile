@@ -16,6 +16,7 @@ RUN wget -O 74cms.zip http://download.74cms.com/download/74cms_v3.6_20150923.zip
 RUN unzip -d 74cms/ ./74cms.zip
 RUN rm -rf /usr/share/nginx/html/*
 RUN cp -rf 74cms/74cms_v3.6_20150923/upload/. /usr/share/nginx/html
+RUN mkdir /usr/share/nginx/html/html
 RUN chmod -R 777 /usr/share/nginx/html/data /usr/share/nginx/html/temp /usr/share/nginx/html/html /usr/share/nginx/html/templates /usr/share/nginx/html/admin/statement /usr/share/nginx/html/install
 RUN rm -rf ./74cms*
 
