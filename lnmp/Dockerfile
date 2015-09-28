@@ -1,38 +1,36 @@
-FROM index.tenxcloud.com/tenxcloud/mysql
+FROM index.tenxcloud.com/bagheera/nginx_php5
 MAINTAINER bagheera "ding@gong.si"
 
 ADD chinese-sources.list /etc/apt/sources.list
 
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
-RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
-
-ENV NGINX_VERSION 1.9.5-1~jessie
+# Add MySQL configuration
+ADD my.cnf /etc/mysql/conf.d/my.cnf
+ADD mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
 
 RUN apt-get update && \
-    apt-get install -y ca-certificates nginx=${NGINX_VERSION} && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -yq install mysql-server-5.6 pwgen && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /etc/mysql/conf.d/mysqld_safe_syslog.cnf && \
+    if [ ! -f /usr/share/mysql/my-default.cnf ] ; then cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf; fi && \
+    mysql_install_db > /dev/null 2>&1 && \
+    touch /var/lib/mysql/.EMPTY_DB
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+# Add MySQL scripts
+ADD import_sql.sh /import_sql.sh
+ADD run.sh /run.sh
 
-VOLUME ["/var/cache/nginx"]
+ENV MYSQL_USER=admin \
+    MYSQL_PASS=**Random** \
+    ON_CREATE_DB=**False** \
+    REPLICATION_MASTER=**False** \
+    REPLICATION_SLAVE=**False** \
+    REPLICATION_USER=replica \
+    REPLICATION_PASS=replica
 
-EXPOSE 80
+# Add VOLUMEs to allow backup of config and databases
+VOLUME  ["/etc/mysql", "/var/lib/mysql"]
 
-# set timezone to PRC
-RUN mv /etc/localtime /etc/localtime.bak
-RUN ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+EXPOSE 3306
+RUN bash /run.sh
 
-RUN apt-get update -y && apt-get install -y php5-fpm php5-curl php5-memcache php5-sqlite php5-tidy php5-xmlrpc php5-mcrypt php5-mhash php5-intl php-apc php5-gd php5-intl php5-mysqlnd php5-pgsql php-pear php5-cli && rm -rf /var/lib/apt/lists/*
-
-# Once we start using PHP, it will dictate the use of www-data, so use that instead of nginx
-RUN sed -i 's/user  nginx/user  www-data/g' /etc/nginx/nginx.conf
-
-# Force PHP to log to nginx
-RUN echo "catch_workers_output = yes" >> /etc/php5/fpm/php-fpm.conf
-
-# Enable php by default
-ADD default.conf /etc/nginx/conf.d/default.conf
-
-CMD service php5-fpm start && nginx -g "daemon off;"
+CMD service php5-fpm start && nginx -g "daemon off;" && /usr/sbin/mysqld
