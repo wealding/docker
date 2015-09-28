@@ -21,4 +21,6 @@ RUN rm -rf ./phpcms*
 
 EXPOSE 80 3306
 
+ADD default.conf /etc/nginx/conf.d/default.conf
+
 CMD /run.sh
