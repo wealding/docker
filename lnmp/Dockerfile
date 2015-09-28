@@ -12,7 +12,6 @@ RUN apt-get -y install pwgen
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q mysql-server-5.6 && \
     rm -rf /var/lib/apt/lists/* && \
-    rm /etc/mysql/conf.d/mysqld_safe_syslog.cnf && \
     if [ ! -f /usr/share/mysql/my-default.cnf ] ; then cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf; fi && \
     mysql_install_db > /dev/null 2>&1 && \
     touch /var/lib/mysql/.EMPTY_DB
