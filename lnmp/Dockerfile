@@ -7,8 +7,11 @@ ADD chinese-sources.list /etc/apt/sources.list
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
 
-RUN apt-get update && \
-    apt-get -yq install mysql-server-5.6 pwgen && \
+RUN apt-get update
+RUN apt-get -y install pwgen
+
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mysql-server-5.6 && \
     rm -rf /var/lib/apt/lists/* && \
     rm /etc/mysql/conf.d/mysqld_safe_syslog.cnf && \
     if [ ! -f /usr/share/mysql/my-default.cnf ] ; then cp /etc/mysql/my.cnf /usr/share/mysql/my-default.cnf; fi && \
@@ -31,6 +34,5 @@ ENV MYSQL_USER=admin \
 VOLUME  ["/etc/mysql", "/var/lib/mysql"]
 
 EXPOSE 3306
-RUN bash /run.sh
 
-CMD service php5-fpm start && nginx -g "daemon off;" && /usr/sbin/mysqld
+CMD /run.sh && service php5-fpm start && nginx -g "daemon off;" && /usr/sbin/mysqld
