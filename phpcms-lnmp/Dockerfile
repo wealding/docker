@@ -21,4 +21,4 @@ RUN rm -rf ./phpcms*
 
 EXPOSE 80 3306
 
-CMD service php5-fpm start && nginx -g "daemon off;" && /run.sh
+CMD /run.sh

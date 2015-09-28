@@ -34,4 +34,4 @@ VOLUME  ["/etc/mysql", "/var/lib/mysql"]
 
 EXPOSE 3306
 
-CMD /run.sh && service php5-fpm start && nginx -g "daemon off;" && /usr/sbin/mysqld
+CMD /run.sh
