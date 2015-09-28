@@ -19,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q mysql-server-5.6 && \
 # Add MySQL scripts
 ADD import_sql.sh /import_sql.sh
 ADD run.sh /run.sh
+RUN chmod +x /*.sh
 
 ENV MYSQL_USER=admin \
     MYSQL_PASS=**Random** \
