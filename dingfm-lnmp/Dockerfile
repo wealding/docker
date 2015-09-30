@@ -7,20 +7,20 @@ RUN ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "nameserver 114.114.114.114" >> /etc/resolv.conf
 RUN echo "nameserver 119.29.29.29" >>  /etc/resolv.conf
 
-#clean up
-RUN rm -rf /usr/share/nginx/html/.git*
-RUN rm -rf /usr/share/nginx/html/index.html
-RUN rm -rf /usr/share/nginx/html/Dockerfile
+ADD chinese-sources.list /etc/apt/sources.list
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
 ENV MAX_UPLOAD "80M"
 
 ADD dingfm.php /usr/share/nginx/html/dingfm.php
 RUN chmod -R 777 /usr/share/nginx/html
-ADD default.conf /etc/nginx/conf.d/default.conf
 
 RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = $MAX_UPLOAD/" /etc/php5/fpm/php.ini
 RUN sed -i "s/post_max_size = 8M/post_max_size = $MAX_UPLOAD/" /etc/php5/fpm/php.ini
 
 
 EXPOSE 80 3306
+
+ADD default.conf /etc/nginx/conf.d/default.conf
+
 CMD /run.sh
