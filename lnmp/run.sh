@@ -102,6 +102,3 @@ if [ -f /var/lib/mysql/.EMPTY_DB ]; then
 fi
 
 fg
-
-service php5-fpm start && nginx -g "daemon off;"
-echo '=> service started.'
