@@ -18,7 +18,6 @@ ADD dingfm.php /usr/share/nginx/html/dingfm.php
 RUN chmod -R 777 /usr/share/nginx/html
 ADD default.conf /etc/nginx/conf.d/default.conf
 
-RUN sed -i "s/http {/http {\n        client_max_body_size $MAX_UPLOAD;/" /etc/nginx/nginx.conf
 RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = $MAX_UPLOAD/" /etc/php5/fpm/php.ini
 RUN sed -i "s/post_max_size = 8M/post_max_size = $MAX_UPLOAD/" /etc/php5/fpm/php.ini
 
