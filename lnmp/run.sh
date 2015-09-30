@@ -91,7 +91,7 @@ fi
 
 echo "=> Starting MySQL ..."
 StartMySQL
-tail -F ${LOG} &
+tail -F "/var/log/mysql/error.log"
 
 # Create admin user and pre create database
 if [ -f /var/lib/mysql/.EMPTY_DB ]; then
@@ -101,6 +101,7 @@ if [ -f /var/lib/mysql/.EMPTY_DB ]; then
     rm /var/lib/mysql/.EMPTY_DB
 fi
 
-service php5-fpm start && nginx -g "daemon off;"
-
 fg
+
+service php5-fpm start && nginx -g "daemon off;"
+echo '=> service started.'
