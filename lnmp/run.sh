@@ -91,7 +91,7 @@ fi
 
 echo "=> Starting MySQL ..."
 StartMySQL
-tail -F "/var/log/mysql/error.log"
+tail -F ${LOG} &
 
 # Create admin user and pre create database
 if [ -f /var/lib/mysql/.EMPTY_DB ]; then
