@@ -20,5 +20,6 @@ RUN sed -i "s/post_max_size = 8M/post_max_size = 80M/" /etc/php5/fpm/php.ini
 EXPOSE 80 3306
 
 ADD default.conf /etc/nginx/conf.d/default.conf
+VOLUME  ["/usr/share/nginx/html"]
 
 CMD /run.sh
