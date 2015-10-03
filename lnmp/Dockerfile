@@ -29,9 +29,21 @@ ENV MYSQL_USER=admin \
     REPLICATION_USER=replica \
     REPLICATION_PASS=replica
 
-# Add VOLUMEs to allow backup of config and databases
-VOLUME  ["/etc/mysql", "/var/lib/mysql"]
+# set timezone to PRC
+RUN mv /etc/localtime /etc/localtime.bak
+RUN ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo "nameserver 114.114.114.114" >> /etc/resolv.conf
+RUN echo "nameserver 119.29.29.29" >>  /etc/resolv.conf
 
-EXPOSE 3306
+# change max_upload size
+RUN sed -i "s/http {/http {\n        client_max_body_size 80M;/" /etc/nginx/nginx.conf
+RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 80M/" /etc/php5/fpm/php.ini
+RUN sed -i "s/post_max_size = 8M/post_max_size = 80M/" /etc/php5/fpm/php.ini
+
+
+# Add VOLUMEs to allow backup of config and databases
+VOLUME  ["/etc/mysql", "/var/lib/mysql", "/usr/share/nginx/html"]
+
+EXPOSE 80 3306
 
 CMD /run.sh
