@@ -1,3 +1,0 @@
-deb http://ftp.cn.debian.org/debian/ jessie main contrib non-free
-
-deb http://ftp.cn.debian.org/debian/ jessie-updates main contrib non-free
