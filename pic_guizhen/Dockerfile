@@ -17,5 +17,4 @@ EXPOSE 80
 # Enable php by default
 ADD default.conf /etc/nginx/conf.d/default.conf
 
-RUN sed -i 's/include mime.types;/server_names_hash_bucket_size 64;\ninclude mime.types;/g' /etc/nginx/nginx.conf
 CMD service php5-fpm start && nginx -g "daemon off;"
