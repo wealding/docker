@@ -19,10 +19,6 @@ VOLUME  ["/mydata"]
 
 RUN chmod -R 777 /mydata
 
-RUN sed -i "s/http {/http {\n        client_max_body_size 80M;/" /etc/nginx/nginx.conf
-RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 80M/" /etc/php5/fpm/php.ini
-RUN sed -i "s/post_max_size = 8M/post_max_size = 80M/" /etc/php5/fpm/php.ini
-
 EXPOSE 80 3306
 
 RUN ln -sf /mydata/conf/default.conf /etc/nginx/conf.d/default.conf
