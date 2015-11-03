@@ -22,5 +22,7 @@ RUN chmod -R 777 /mydata
 EXPOSE 80 3306
 
 RUN ln -sf /mydata/conf/default.conf /etc/nginx/conf.d/default.conf
+RUN ln -sf /mydata/conf/avatar.conf /etc/nginx/conf.d/avatar.conf
+RUN ln -sf /mydata/conf/nginx.conf /etc/nginx/nginx.conf
 
 CMD /run.sh
