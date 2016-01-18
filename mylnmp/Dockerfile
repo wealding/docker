@@ -22,7 +22,6 @@ EXPOSE 80 3306
 RUN ln -sf /mydata/conf/default.conf /etc/nginx/conf.d/default.conf
 RUN ln -sf /mydata/conf/avatar.conf /etc/nginx/conf.d/avatar.conf
 RUN ln -sf /mydata/conf/nginx.conf /etc/nginx/nginx.conf
-RUN ln -sf /mydata/conf/resolv.conf /etc/resolv.conf
 RUN ln -sf /mydata/conf/phpfpm-www.conf /etc/php5/fpm/pool.d/www.conf
 
 CMD /run.sh
